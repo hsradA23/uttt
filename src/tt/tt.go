@@ -26,7 +26,6 @@ type Board struct {
 
 func Initialize() Board {
 	return Board{[]int{0, 0, 0, 0, 0, 0, 0, 0, 0}, Empty, Empty}
-
 }
 
 func (board Board) Print_board() {
@@ -42,8 +41,8 @@ func (board *Board) Move(player, position int) {
 	if board.winner != Empty {
 		log.Println("Cannot play on a board with a winner.")
 		return
-
 	}
+
 	if !(player == Player1 || player == Player2) {
 		log.Println("Invalid value for player")
 		return
@@ -53,17 +52,21 @@ func (board *Board) Move(player, position int) {
 		log.Println(fmt.Sprintf("Invalid position: %d", position))
 		return
 	}
+
 	if board.arr[position] != Empty {
 		log.Println("Invalid move, spot is already filled.")
 		return
 	}
+
 	if player == board.lastPlayer {
 		log.Println("Same player cannot play again")
 		return
 	}
+
 	board.arr[position] = player
 	board.lastPlayer = player
 	log.Println(fmt.Sprintf("Moving player %d to position %d", player, position))
+
 	if winner := board.check_win(); winner != Empty {
 		board.winner = winner
 		log.Println("Player", winner, "has won the game.")
