@@ -19,13 +19,13 @@ const (
 )
 
 type Board struct {
-	arr        []int
-	lastPlayer int
-	winner     int
+	arr    []int
+	Winner int
 }
 
 func Initialize() Board {
-	return Board{[]int{0, 0, 0, 0, 0, 0, 0, 0, 0}, Empty, Empty}
+	log.Println("Initialising board")
+	return Board{[]int{0, 0, 0, 0, 0, 0, 0, 0, 0}, Empty}
 }
 
 func (board Board) Print_board() {
@@ -38,7 +38,7 @@ func (board Board) Print_board() {
 }
 
 func (board *Board) Move(player, position int) {
-	if board.winner != Empty {
+	if board.Winner != Empty {
 		log.Println("Cannot play on a board with a winner.")
 		return
 	}
@@ -58,17 +58,11 @@ func (board *Board) Move(player, position int) {
 		return
 	}
 
-	if player == board.lastPlayer {
-		log.Println("Same player cannot play again")
-		return
-	}
-
 	board.arr[position] = player
-	board.lastPlayer = player
 	log.Println(fmt.Sprintf("Moving player %d to position %d", player, position))
 
 	if winner := board.check_win(); winner != Empty {
-		board.winner = winner
+		board.Winner = winner
 		log.Println("Player", winner, "has won the game.")
 	}
 }
